@@ -14,7 +14,7 @@ export class Wizard extends EventEmitter {
 		this._graph = graph;
 		this._currNode = this._graph.node(0);
 		this._prevNode = null;
-		this._nodeStack = [];
+		this._prevStack = [];
 	}
 
 	/**
@@ -95,7 +95,7 @@ export class Wizard extends EventEmitter {
 		const nextNode = this._graph.node(n);
 		const currNode = this._currNode;
 
-		this._nodeStack.push(currNode);
+		this._prevStack.push(currNode);
 		this._currNode = nextNode;
 		this._prevNode = currNode;
 
@@ -106,9 +106,9 @@ export class Wizard extends EventEmitter {
 
 	/** Go back to the previous node if available. */
 	back() {
-		if (this._nodeStack.length > 0) {
+		if (this._prevStack.length > 0) {
 			const currNode = this.currNode;
-			const prevNode = this._nodeStack.pop();
+			const prevNode = this._prevStack.pop();
 
 			this._currNode = prevNode;
 			this._prevNode = currNode;
