@@ -1,12 +1,17 @@
 import jsgraphs from 'js-graph-algorithms';
 
+import { GraphFactory } from '../../../../models/wizard';
 import { decorateNodes } from '../../../../wizards/decorators';
 
 export const createTestGraph = () => {
-	const g = new jsgraphs.DiGraph(4);
-	g.addEdge(0, 1);
-	g.addEdge(1, 2);
-	g.addEdge(2, 3);
+	const g = GraphFactory.create(4)
+		.connect(
+			0,
+			1
+		)
+		.and(1, 2)
+		.and(2, 3)
+		.build();
 	decorateNodes(g);
 	return g;
 };

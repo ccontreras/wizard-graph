@@ -1,6 +1,4 @@
-import jsgraphs from 'js-graph-algorithms';
-
-import Wizard from '../../../models/wizard';
+import { Wizard, GraphFactory } from '../../../models/wizard';
 import { createTestGraph, setAllCompleted } from './__helpers__';
 
 describe('Wizard', () => {
@@ -15,14 +13,14 @@ describe('Wizard', () => {
 
 	describe('Wizard#constructor', () => {
 		it('should throw an error when graph has no nodes', () => {
-			const g = new jsgraphs.DiGraph(0);
+			const g = GraphFactory.create(0).build();
 			expect(() => {
 				Wizard.create(g);
 			}).toThrowError('The graph MUST contains at least one node');
 		});
 
 		it('should be initialized successfully', () => {
-			const g = new jsgraphs.DiGraph(1);
+			const g = GraphFactory.create(1).build();
 			expect(() => {
 				Wizard.create(g);
 			}).not.toThrow();
