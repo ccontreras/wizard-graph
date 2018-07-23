@@ -15,6 +15,6 @@ describe('GraphFactory', () => {
 
 		expect(g).toBeDefined();
 		expect(g.V).toBe(2);
-		expect(dfs.hasPathTo(1));
+		expect(dfs.hasPathTo(1)).toBeTruthy();
 	});
 });
