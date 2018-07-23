@@ -11,7 +11,7 @@ export const createTestGraph = () => {
 		)
 		.and(1, 2)
 		.and(2, 3)
-		.build();
+		.get();
 	decorateNodes(g);
 	return g;
 };

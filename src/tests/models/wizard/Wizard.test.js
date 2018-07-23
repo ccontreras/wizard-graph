@@ -13,14 +13,14 @@ describe('Wizard', () => {
 
 	describe('Wizard#constructor', () => {
 		it('should throw an error when graph has no nodes', () => {
-			const g = GraphFactory.create(0).build();
+			const g = GraphFactory.create(0).get();
 			expect(() => {
 				Wizard.create(g);
 			}).toThrowError('The graph MUST contains at least one node');
 		});
 
 		it('should be initialized successfully', () => {
-			const g = GraphFactory.create(1).build();
+			const g = GraphFactory.create(1).get();
 			expect(() => {
 				Wizard.create(g);
 			}).not.toThrow();

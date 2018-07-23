@@ -22,7 +22,7 @@ export class GraphFactory {
 		);
 	}
 
-	build() {
+	get() {
 		return this._graph;
 	}
 

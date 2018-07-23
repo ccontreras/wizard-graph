@@ -9,7 +9,7 @@ describe('GraphFactory', () => {
 				0,
 				1
 			)
-			.build();
+			.get();
 
 		const dfs = new jsgraphs.DepthFirstSearch(g, 0);
 
