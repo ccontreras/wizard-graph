@@ -55,7 +55,28 @@ describe('Wizard', () => {
 				testWizard.next(1);
 			}).not.toThrow();
 			expect(testWizard._currNode.index).toBe(1);
+			expect(testWizard._prevNode).not.toBeNull();
 			expect(testWizard._prevNode.index).toBe(0);
+		});
+	});
+
+	describe('Wizard#back', () => {
+		it('should go 1 step back', () => {
+			expect(testWizard._prevNode).toBeNull();
+
+			testWizard.next(1);
+			expect(testWizard._prevNode).not.toBeNull();
+			expect(testWizard._prevNode.index).toBe(0);
+
+			testWizard.back();
+			expect(testWizard._prevNode).not.toBeNull();
+			expect(testWizard._prevNode.index).toBe(1);
+			expect(testWizard._currNode.index).toBe(0);
+		});
+
+		it('should the wizard state stays as it is if no node are in previous stack', () => {
+			testWizard.back();
+			expect(testWizard._currNode.index).toBe(0);
 		});
 	});
 

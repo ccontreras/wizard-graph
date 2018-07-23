@@ -107,7 +107,7 @@ export class Wizard extends EventEmitter {
 	/** Go back to the previous node if available. */
 	back() {
 		if (this._prevStack.length > 0) {
-			const currNode = this.currNode;
+			const currNode = this._currNode;
 			const prevNode = this._prevStack.pop();
 
 			this._currNode = prevNode;
