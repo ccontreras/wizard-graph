@@ -1,12 +1,20 @@
 import jsgraphs from 'js-graph-algorithms';
+import { EventEmitter } from 'fbemitter';
 
-export default class Wizard {
+export const EVENT_NEXT = 'event_next';
+export const EVENT_PREV = 'event_prev';
+export const EVENT_STEP_COMPLETED = 'event_step_completed';
+
+export default class Wizard extends EventEmitter {
 	constructor(graph) {
+		super();
+
 		if (graph.V === 0) throw Error('The graph MUST contains at least one node');
 
 		this._graph = graph;
 		this._currNode = this._graph.node(0);
 		this._prevNode = null;
+		this._nodeStack = [];
 	}
 
 	/**
@@ -53,14 +61,15 @@ export default class Wizard {
 
 	/**
 	 * Sets the current step as completed or not.
-	 * @param {boolean} s true if completed.
+	 * @param {boolean} completed true if completed.
 	 */
-	setCurrentStepCompleted(s) {
-		this._setStepStatus(this._currNode.index, s);
+	setCurrentStepCompleted(completed) {
+		this._setStepCompleted(this._currNode.index, completed);
 	}
-
-	_setStepStatus(n, s) {
-		this._graph.node(n).completed = s;
+	_setStepCompleted(n, completed) {
+		const node = this._graph.node(n);
+		node.completed = completed;
+		this.emit(EVENT_STEP_COMPLETED, node);
 	}
 
 	/**
@@ -83,17 +92,28 @@ export default class Wizard {
 			);
 		}
 
-		const node = this._graph.node(n);
-		this._prevNode = this._currNode;
-		this._currNode = node;
+		const nextNode = this._graph.node(n);
+		const lastNode = this._currNode;
 
-		return node;
+		this._nodeStack.push(lastNode);
+		this._currNode = nextNode;
+		this._prevNode = lastNode;
+
+		this.emit(EVENT_NEXT, lastNode, nextNode);
+
+		return nextNode;
 	}
 
 	/** Go back to the previous node if available. */
-	prev() {
-		if (this._prevNode) {
-			this._currNode = this._prevNode;
+	back() {
+		if (this._nodeStack.length > 0) {
+			const currNode = this.currNode;
+			const prevNode = this._nodeStack.pop();
+
+			this._currNode = prevNode;
+			this._prevNode = currNode;
+
+			this.emit(EVENT_PREV, currNode, prevNode);
 		}
 	}
 
