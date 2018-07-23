@@ -27,9 +27,12 @@
     "preact-render-spy": "^1.2.1"
   },
   "dependencies": {
+    "antd": "^3.7.0",
+    "js-graph-algorithms": "^1.0.18",
     "preact": "^8.2.6",
     "preact-compat": "^3.17.0",
-    "preact-router": "^2.5.7"
+    "preact-router": "^2.5.7",
+    "prop-types": "^15.6.2"
   },
   "jest": {
     "verbose": true,
