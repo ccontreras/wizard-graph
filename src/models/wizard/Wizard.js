@@ -25,17 +25,13 @@ export class Wizard extends EventEmitter {
 	 * @returns {number} the total completed.
 	 */
 	countCompleted() {
-		return this._recursiveCountCompleted(this._graph.node(0));
-	}
-	_recursiveCountCompleted(n) {
-		let completed = n && !n.skippable && n.completed ? 1 : 0;
-		const adj = this._graph.adj(n.index);
-		if (adj) {
-			for (let i = 0; i < adj.length; i++) {
-				completed += this._recursiveCountCompleted(this._graph.node(adj[i]));
-			}
+		let c = 0;
+		let n;
+		for (let i = 0; i < this._graph.V; i++) {
+			n = this._graph.node(i);
+			if (!n.skippable && n.completed) c++; // C++..., badum pssss :)
 		}
-		return completed;
+		return c;
 	}
 
 	/**
