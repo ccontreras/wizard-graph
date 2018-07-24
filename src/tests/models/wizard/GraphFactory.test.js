@@ -14,6 +14,7 @@ describe('GraphFactory', () => {
 		const dfs = new jsgraphs.DepthFirstSearch(g, 0);
 
 		expect(g).toBeDefined();
+		expect(g).toBeInstanceOf(jsgraphs.DiGraph);
 		expect(g.V).toBe(2);
 		expect(dfs.hasPathTo(1)).toBeTruthy();
 	});
