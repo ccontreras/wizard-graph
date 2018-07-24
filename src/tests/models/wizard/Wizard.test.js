@@ -1,3 +1,5 @@
+import jsgraphs from 'js-graph-algorithms';
+
 import { Wizard, GraphFactory } from '../../../models/wizard';
 import { createTestGraph, setAllCompleted } from './__helpers__';
 
@@ -17,6 +19,13 @@ describe('Wizard', () => {
 			expect(() => {
 				Wizard.create(g);
 			}).toThrowError('The graph MUST contains at least one node');
+		});
+
+		it('should throw if the graph is not a DiGraph', () => {
+			const g = new jsgraphs.Graph(1);
+			expect(() => {
+				Wizard.create(g);
+			}).toThrowError('The graph MUST be a DiGraph');
 		});
 
 		it('should be initialized successfully', () => {

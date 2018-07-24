@@ -9,7 +9,10 @@ export class Wizard extends EventEmitter {
 	constructor(graph) {
 		super();
 
-		if (graph.V === 0) throw Error('The graph MUST contains at least one node');
+		if (!(graph instanceof jsgraphs.DiGraph))
+			throw new Error('The graph MUST be a DiGraph');
+		if (graph.V === 0)
+			throw new Error('The graph MUST contains at least one node');
 
 		this._graph = graph;
 		this._currNode = this._graph.node(0);
