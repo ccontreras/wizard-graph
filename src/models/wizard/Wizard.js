@@ -21,6 +21,33 @@ export class Wizard extends EventEmitter {
 	}
 
 	/**
+	 * Calculates the progress for required nodes.
+	 * @returns {number}
+	 */
+	progress() {
+		const nodes = this._getNoSkippableNodes();
+		let c = 0;
+		return nodes.reduce((p, v) => {
+			if (v.completed) {
+				c++;
+				p = (c / nodes.length) * 100;
+			}
+			return p;
+		}, 0);
+	}
+	_getNoSkippableNodes() {
+		const nodes = [];
+		let n;
+		for (let i = 0; i < this._graph.V; i++) {
+			n = this._graph.node(i);
+			if (!n.skippable) {
+				nodes.push(n);
+			}
+		}
+		return nodes;
+	}
+
+	/**
 	 * Calculates the total of completed steps.
 	 * @returns {number} the total completed.
 	 */

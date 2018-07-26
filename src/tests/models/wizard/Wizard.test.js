@@ -105,4 +105,21 @@ describe('Wizard', () => {
 			expect(testWizard.countCompleted()).toBe(3);
 		});
 	});
+
+	describe('Wizard#progress', () => {
+		it('should return 0 if none skippable steps are not completed', () => {
+			expect(testWizard.progress()).toBe(0);
+		});
+
+		it('should return 50 when a half of no skippable nodes are completed', () => {
+			testGraph.node(0).completed = true;
+			testGraph.node(1).completed = true;
+			expect(testWizard.progress()).toBe(50);
+		});
+
+		it('should return 100 when all of no skippable nodes are completed', () => {
+			setAllCompleted(testGraph);
+			expect(testWizard.progress()).toBe(100);
+		});
+	});
 });
