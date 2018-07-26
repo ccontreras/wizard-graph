@@ -27,14 +27,24 @@ export class Wizard extends EventEmitter {
 	progress() {
 		const nodes = this._getNoSkippableNodes();
 		let c = 0;
-		return nodes.reduce((p, v) => {
-			if (v.completed) {
+		return nodes.reduce((a, b) => {
+			if (b.completed) {
 				c++;
-				p = (c / nodes.length) * 100;
+				a = (c / nodes.length) * 100;
 			}
-			return p;
+			return a;
 		}, 0);
 	}
+
+	/**
+	 * Calculates the total of completed steps.
+	 * @returns {number} the total completed.
+	 */
+	completed() {
+		let nodes = this._getNoSkippableNodes();
+		return nodes.reduce((a, b) => (b.completed ? a + 1 : a), 0);
+	}
+
 	_getNoSkippableNodes() {
 		const nodes = [];
 		let n;
@@ -45,20 +55,6 @@ export class Wizard extends EventEmitter {
 			}
 		}
 		return nodes;
-	}
-
-	/**
-	 * Calculates the total of completed steps.
-	 * @returns {number} the total completed.
-	 */
-	countCompleted() {
-		let c = 0;
-		let n;
-		for (let i = 0; i < this._graph.V; i++) {
-			n = this._graph.node(i);
-			if (!n.skippable && n.completed) c++; // C++..., badum pssss :)
-		}
-		return c;
 	}
 
 	/**

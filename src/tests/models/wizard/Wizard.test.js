@@ -89,20 +89,20 @@ describe('Wizard', () => {
 		});
 	});
 
-	describe('Wizard#countCompleted', () => {
+	describe('Wizard#completed', () => {
 		it('should none step be completed', () => {
-			expect(testWizard.countCompleted()).toBe(0);
+			expect(testWizard.completed()).toBe(0);
 		});
 
 		it('should all 4 nodes be completed', () => {
 			setAllCompleted(testGraph);
-			expect(testWizard.countCompleted()).toBe(4);
+			expect(testWizard.completed()).toBe(4);
 		});
 
 		it('should be 3 completed when one is skippable', () => {
 			testGraph.node(3).skippable = true;
 			setAllCompleted(testGraph);
-			expect(testWizard.countCompleted()).toBe(3);
+			expect(testWizard.completed()).toBe(3);
 		});
 	});
 

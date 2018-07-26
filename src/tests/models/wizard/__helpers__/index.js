@@ -1,7 +1,7 @@
 import jsgraphs from 'js-graph-algorithms';
 
 import { GraphFactory } from '../../../../models/wizard';
-import { decorateNodes } from '../../../../wizards/decorators';
+import { decorateNodes } from '../../../../wizards/helpers';
 
 export const createTestGraph = () => {
 	const g = GraphFactory.create(4)
